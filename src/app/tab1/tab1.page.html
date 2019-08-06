@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{title}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h3 class="no-item" text-center *ngIf = "loadItems().length === 0">
+    No items available in the list!
+  </h3>
+  <ion-list>
+<!-- Sliding items with delete option on the end -->
+<ion-item-sliding *ngFor = "let item of loadItems(); let i = index">
+  <ion-item>
+    <h2>{{item.name}} : {{item.quantity}}</h2><br>
+  </ion-item>
+  <ion-item-options side="end">
+    <ion-item-option color="primary" (click)="editItem(item, i)">
+      <ion-icon name="create"></ion-icon>
+      Edit</ion-item-option>
+
+      <ion-item-option color="light" (click)="shareItem(item, i)">
+        <ion-icon name="share"></ion-icon>
+        Share</ion-item-option>
+
+    <ion-item-option color="danger" (click)="removeItem(item, i)">
+      <ion-icon name="trash"></ion-icon>
+      Remove</ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
+</ion-list>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addItem()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
