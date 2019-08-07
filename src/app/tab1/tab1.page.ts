@@ -14,13 +14,27 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 })
 export class Tab1Page {
 
-  title = "Groceries"
+  title = "Groceries";
+
+  items = [];
+  errorMessage: string;
 
 
-  constructor(public toastController: ToastController, public alertController: AlertController, public dataService:GroceriesServiceService, public inputDialogService:InputDialogServiceService, public socialSharing: SocialSharing) {}
+  constructor(public toastController: ToastController, public alertController: AlertController, public dataService:GroceriesServiceService, public inputDialogService:InputDialogServiceService, public socialSharing: SocialSharing) {
+    dataService.dataChanged$.subscribe((dataChanged: boolean) => {
+      this.loadItems();
+    });
+  }
+
+  ionViewLoad() {
+    this.loadItems();
+  }
 
 loadItems() {
-  return this.dataService.getItems();
+  return this.dataService.getItems()
+    .subscribe(
+      items => this.items = items,
+      error => this.errorMessage = <any>error);
 }
 
   async removeItem(item, index) {
