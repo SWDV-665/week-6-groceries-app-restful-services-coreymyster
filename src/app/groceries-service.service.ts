@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,18 +26,22 @@ export class GroceriesServiceService {
   }
 
   getItems(): Observable<object[]> {
-    return this.http.get<object[]>(this.baseURL + '/api/groceries').pipe(
+    console.log("getting items")
+    return this.http.get(this.baseURL + "/api/groceries").pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
   }
 
   private extractData(res: Response) {
+    console.log("Starting extractData");
     let body = res;
     return body || {};
+    console.log("Ending extractData");
   }
 
   private handleError(error: Response | any) {
+    console.log("Starting error handler");
     let errMsg: string;
     if (error instanceof Response) {
       const err = error || '';

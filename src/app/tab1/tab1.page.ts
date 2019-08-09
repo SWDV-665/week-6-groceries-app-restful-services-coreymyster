@@ -22,19 +22,23 @@ export class Tab1Page {
 
   constructor(public toastController: ToastController, public alertController: AlertController, public dataService:GroceriesServiceService, public inputDialogService:InputDialogServiceService, public socialSharing: SocialSharing) {
     dataService.dataChanged$.subscribe((dataChanged: boolean) => {
+      console.log("Data changed");
       this.loadItems();
+      console.log("Calling loadItems");
     });
   }
 
   ionViewDidLoad() {
     this.loadItems();
+    console.log("Load items called");
   }
 
 loadItems() {
   this.dataService.getItems()
-    .subscribe(
+  .subscribe(
       items => this.items = items,
       error => this.errorMessage = <any>error);
+      console.log("Load items called");
 }
 
   async removeItem(item, index) {
