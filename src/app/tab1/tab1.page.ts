@@ -26,12 +26,12 @@ export class Tab1Page {
     });
   }
 
-  ionViewLoad() {
+  ionViewDidLoad() {
     this.loadItems();
   }
 
 loadItems() {
-  return this.dataService.getItems()
+  this.dataService.getItems()
     .subscribe(
       items => this.items = items,
       error => this.errorMessage = <any>error);
